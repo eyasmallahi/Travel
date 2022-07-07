@@ -49,7 +49,7 @@ namespace API.Controllers
 
         // GET: api/<AppUser>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Travel>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Travel>>> GetTravels()
         {
             return LoadListFromDb();
         }

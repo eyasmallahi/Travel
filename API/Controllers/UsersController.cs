@@ -19,37 +19,41 @@ namespace API.Controllers
         }
 
         private List<AppUser> LoadListFromDb()
-        { 
+        {
+            string cs = _configuration.GetConnectionString("DefaultConnection");
+
             List<AppUser> listMain = new List<AppUser>();
-            SqlConnection con=new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-            SqlCommand cmd = new SqlCommand("Select * from tbl_User", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
+
+            using (SqlConnection con = new SqlConnection(cs))
             {
-               
-                AppUser obj =new AppUser();
-                obj.Id = dt.Rows[i]["Id"].ToString();
-                obj.FullName=dt.Rows[i]["FullName"].ToString();
-                obj.Age = (int)decimal.Parse(dt.Rows[i]["Age"].ToString());
+                SqlCommand cmd = new SqlCommand("Select * from tbl_User", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
 
-                obj.phoneNumber = dt.Rows[i]["phoneNumber"].ToString();
-                obj.Contry = dt.Rows[i]["Contry"].ToString();
-                obj.City = dt.Rows[i]["City"].ToString();
-                obj.street = dt.Rows[i]["street"].ToString();
-                obj.Email = dt.Rows[i]["Email"].ToString();
-                obj.UserType = dt.Rows[i]["UserType"].ToString();
+                    AppUser obj = new AppUser();
+                    obj.Id = dt.Rows[i]["Id"].ToString();
+                    obj.FullName = dt.Rows[i]["FullName"].ToString();
+                    obj.Age = (int)decimal.Parse(dt.Rows[i]["Age"].ToString());
 
-                obj.TravelID = dt.Rows[i]["TravelID"].ToString();
+                    obj.phoneNumber = dt.Rows[i]["phoneNumber"].ToString();
+                    obj.Contry = dt.Rows[i]["Contry"].ToString();
+                    obj.City = dt.Rows[i]["City"].ToString();
+                    obj.street = dt.Rows[i]["street"].ToString();
+                    obj.Email = dt.Rows[i]["Email"].ToString();
+                    obj.UserType = dt.Rows[i]["UserType"].ToString();
 
-                listMain.Add(obj);
+                    obj.TravelID = dt.Rows[i]["TravelID"].ToString();
 
+                    listMain.Add(obj);
+
+                }
+
+                return listMain;
             }
-
-            return listMain;
         }
-
 
 
        

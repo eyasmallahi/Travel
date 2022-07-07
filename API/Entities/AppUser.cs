@@ -24,10 +24,10 @@ namespace API.Entities
         [Required]
         public string street { get; set; }
         [Required]
-        public string HashPassword { get; set; }
+        public byte[] HashPassword { get; set; }
         [Required]
 
-        public string SaltPassword { get; set; }
+        public byte[] SaltPassword { get; set; }
         [Required]
         public string UserType { get; set; }
        
